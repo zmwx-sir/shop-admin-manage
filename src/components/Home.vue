@@ -30,12 +30,12 @@
               <span>{{item.authName}}</span>
             </template>
             <!-- 二级菜单 -->
-            <el-menu-item index="item.id" v-for="item in item.children" :key="item.id">
+            <el-menu-item :index="subItem.id+''" v-for="subItem in item.children" :key="subItem.id">
               <template slot="title">
                 <!-- 图标 -->
                 <i class="el-icon-menu"></i>
                 <!-- 文本 -->
-                <span>{{item.authName}}</span>
+                <span>{{subItem.authName}}</span>
               </template>
             </el-menu-item>
           </el-submenu>
