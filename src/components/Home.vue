@@ -4,7 +4,6 @@
       <div>
         <img src="../../public/new_logo1_legal1.png" alt width="100" height="50" />
         <span>货捕头电商管理系统</span>
-        
       </div>
       <el-button type="info" @click="login_out">退出</el-button>
     </el-header>
@@ -20,6 +19,7 @@
           :collapse="isCollapse"
           :collapse-transition="false"
           :router="true"
+          :default-active="activePath"
         >
           <el-submenu :index="item.id+''" v-for="item in MenuList" :key="item.id">
             <!-- 一级菜单 的模板区域 -->
@@ -30,7 +30,7 @@
               <span>{{item.authName}}</span>
             </template>
             <!-- 二级菜单 -->
-            <el-menu-item :index="subItem.id+''" v-for="subItem in item.children" :key="subItem.id">
+            <el-menu-item :index="'/'+subItem.path" v-for="subItem in item.children" :key="subItem.id" @click="savaNavState('/'+subItem.path)">
               <template slot="title">
                 <!-- 图标 -->
                 <i class="el-icon-menu"></i>
@@ -61,10 +61,13 @@ export default {
       },
       // 是否折叠
       isCollapse:false,
+      // 被激活的链接地址
+      activePath:""
     };
   },
   created() {
     this.getMenuList();
+    this.activePath=window.sessionStorage.getItem('activePath');
   },
   methods: {
     login_out() {
@@ -81,6 +84,11 @@ export default {
     //左侧菜单导航的折叠与展开
     toggleCollapse(){
       this.isCollapse=!this.isCollapse
+    },
+    // 保存链接的激活状态 session
+    savaNavState(activePath){
+      window.sessionStorage.setItem('activePath',activePath);
+      this.activePath=activePath;
     }
   }
 };
