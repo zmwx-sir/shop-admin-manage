@@ -197,6 +197,8 @@ export default {
       cb(new Error("请输入合法的手机"));
     };
     return {
+      // 需要被分配角色的用户信息
+      userInfo:{},
       QueryInfo: {
         query: "",
         pagenum: 1,
@@ -372,6 +374,7 @@ export default {
    },
   //  展示分配角色对话框
   setRole(userInfo){
+    this.userInfo=userInfo;
     this.setRoleDialogVisible=true;
   }
   },
