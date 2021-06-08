@@ -79,7 +79,6 @@ export default {
       const { data: res } = await this.$http.get("menus");
       if (res.meta.status !== 200) return this.$message.error(res.meta.msg);
       this.MenuList = res.data;
-      console.log(res);
     },
     //左侧菜单导航的折叠与展开
     toggleCollapse(){

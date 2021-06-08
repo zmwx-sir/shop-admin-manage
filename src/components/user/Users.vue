@@ -73,6 +73,7 @@
                 type="warning"
                 icon="el-icon-setting"
                 size="mini"
+                @click="setRole(scope.row)"
               ></el-button>
             </el-tooltip>
           </template>
@@ -159,6 +160,19 @@
         <el-button type="primary" @click="editUser">确 定</el-button>
       </span>
     </el-dialog>
+
+    <!-- 为用户分配角色的对话框 -->
+<el-dialog
+  title="分配角色"
+  :visible.sync="setRoleDialogVisible"
+  width="50%"
+  >
+  <span>这是一段信息</span>
+  <span slot="footer" class="dialog-footer">
+    <el-button @click="setRoleDialogVisible = false">取 消</el-button>
+    <el-button type="primary" @click="setRoleDialogVisible = false">确 定</el-button>
+  </span>
+</el-dialog>
   </div>
 </template>
 
@@ -195,6 +209,8 @@ export default {
       addDialogVisible: false,
       // 控制修改用户对话框的显示隐藏
       editDialogVisible: false,
+      // 控制分配角色对话框的显示隐藏
+      setRoleDialogVisible:false,
 
       addForm: {
         username: "",
@@ -242,6 +258,7 @@ export default {
           { validator: checkMobile, trigger: "blur" },
         ],
       },
+
     };
   },
   created() {
@@ -271,7 +288,6 @@ export default {
       const { data: res } = await this.$http.put(
         `Users/${userInfo.id}/state/${userInfo.mg_state}`
       );
-      console.log("res:", res);
 
       if (res.meta.status !== 200) {
         userInfo.mg_state = !userInfo.mg_state;
@@ -353,7 +369,11 @@ export default {
     }
 
     }
-   }
+   },
+  //  展示分配角色对话框
+  setRole(userInfo){
+    this.setRoleDialogVisible=true;
+  }
   },
 };
 </script>
